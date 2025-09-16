@@ -1,0 +1,1810 @@
+#include <Keyboard.h>
+#include <Mouse.h>
+
+int mage_cir = 0;
+int acc[6] ={30, 36, 41, 49, 54, 60}; //acc-- , const x = 49 (138) 330
+bool farm;
+int incomingB;
+int om;
+
+//case 48 49 50 51 52 53 54 55 56 57 65 66 67 68 69 70 71 72 73 74 75 98 97 80 81 82 119 118 117
+//116 115 114 113 112 111 110 109 108 107 106 105 104 103 102 101 100
+
+void setup() {
+Serial.begin(9600);
+pinMode(3, INPUT_PULLUP);
+pinMode(5, INPUT_PULLUP);
+Mouse.begin();
+Keyboard.begin();
+}
+
+
+void loop() {
+  delay(1000);
+
+  
+  //Serial.println(2);
+  incomingB = Serial.read();
+  if(Serial.available() > 0){
+    switch (incomingB){
+      case 48:
+          MouseMove(91, 68); //enter server 940  690 88, 63
+          delay(300);
+          Lclick();
+          delay(1000);
+          Lclick();
+        break;
+      case 49:
+          MouseMove(160, 96); //enter game 1745 1000
+          delay(700);
+          Lclick();
+          delay(1000);
+          Lclick();
+          delay(1000);
+          MouseMove(1, 1);
+        break;
+      case 50:
+          //MouseMove(64, 11); //close ad
+          //Lclick();
+          MouseMove(118, 15); //play
+          delay(300);
+          Lclick();
+        break;
+      case 51:
+          MouseMove(84, 63); //accept 1045 550
+          delay(300);
+          Lclick();
+        break;
+      case 52:
+          delay(500);
+          MouseMove(111, 26); //mob 1168 285
+          delay(500);
+          Lclick();
+        break;
+      case 53:
+          inGame(); //gi, calendar, bottle 
+        break;
+      case 54:
+          DailyChange();
+        break;
+      case 55:
+          MouseMove(62, 100); //launcher 210 1050 (19, 97)
+          delay(1000);
+          Lclick();
+        break;
+      case 56:
+          Gold();
+        break;
+      case 57:
+          delay(200);
+          MouseMove(110, 99); // gold 32, 51  1166 1045
+          delay(600);
+          Lclick();
+        break;
+      case 65:
+          ExitGame();
+        break;
+      case 66:
+          MouseMove(115, 31);
+          delay(500);
+          Lclick();
+          delay(1000);
+          MouseMove(105, 31);
+          delay(500);
+          Lclick();
+        break;
+      case 67:
+          MouseMove(155, 26);
+          delay(500);
+          Lclick();
+          delay(3000);
+          Lclick();
+          delay(6000);
+          // Lclick();
+          // delay(600);
+          Keyboard.press('1');
+          delay(100);
+          Keyboard.release('1');
+          delay(600);
+          Keyboard.press('2');
+          delay(100);
+          Keyboard.release('2');
+          delay(600);
+          Keyboard.press('3');
+          delay(100);
+          Keyboard.release('3');
+          delay(600);
+          Keyboard.press('4');
+          delay(100);
+          Keyboard.release('4');
+        break;
+      case 68:
+//          MouseMove(74, 24);
+//          delay(500);
+//          Lclick();
+//          delay(600);
+//          Keyboard.press(KEY_DOWN_ARROW);
+//          delay(50);
+//          Keyboard.release(KEY_DOWN_ARROW);
+//          delay(300);
+//          Keyboard.press(KEY_RIGHT_ARROW); //enter
+//          delay(50);
+//          Keyboard.release(KEY_RIGHT_ARROW);
+//          //
+//          delay(2000);
+//          Keyboard.press(KEY_DOWN_ARROW);
+//          delay(50);
+//          Keyboard.release(KEY_DOWN_ARROW);
+//          delay(600);
+//          Keyboard.press(176); //enter
+//          delay(100);
+//          Keyboard.release(176);
+          delay(600);
+          MouseMove(72, 28);
+          delay(500);
+          Lclick();
+        break;
+      case 69:
+          Keyboard.press(KEY_RIGHT_ARROW);
+          delay(50);
+          Keyboard.release(KEY_RIGHT_ARROW);
+        break;
+      case 70:
+          Keyboard.press(176); //enter
+          delay(600);
+          Keyboard.release(176);
+        break;
+      case 71:
+          MouseMove(143, 38);
+          delay(500);
+          Lclick();
+        break;
+      case 72:
+          MouseMove(100, 73);
+          delay(500);
+          Lclick();
+        break;
+      case 73:
+          MouseMove(109, 77);
+          delay(500);
+          Lclick();
+        break;
+      case 74:
+          MouseMove(142, 92);
+          delay(500);
+          Lclick();
+        break;
+      case 75: //выход из vm
+          MouseMove(156, 21);
+          delay(500);
+          Lclick();
+          delay(5000);
+          Keyboard.press(176); //enter
+          delay(600);
+          Keyboard.release(176);
+        break;
+      case 99: //auto vpn
+          MouseMove(102, 62);
+          delay(2000);
+          Lclick();
+          MouseMove(102, 36);
+          delay(2000);
+          Lclick();
+          MouseMove(79, 31);
+          delay(500);
+          Lclick();
+        break;
+      case 98:
+          MouseMove(138, 13); //change user 1480 140
+          delay(300);
+        break;
+      case 97://----
+          MouseMove(49, 25); //change user (2) 
+          delay(300);
+        break;
+      case 80:
+        delay(600);
+        MouseMove(108, 95); 
+        delay(600);
+        Lclick();
+        delay(600);
+        Keyboard.press('i');
+        delay(600);
+        Keyboard.release('i');
+        break;
+      case 81:
+        delay(500);
+        MouseMove(1, 1);
+        delay(300);
+        break;
+      case 82:
+        delay(200);
+        MouseMove(121, 24);
+        delay(600);
+        Lclick();
+        break;
+      case 83:
+        delay(200);
+        //MouseMove(91, 55);
+        MouseMove(113, 56);
+        delay(600);
+        Lclick();
+        break;
+      case 111:
+        delay (10000);
+        MouseMove(2, 101);
+        delay(500);
+        Lclick();
+        delay(2000);
+        MouseMove(2, 96);
+        delay(500);
+        Lclick();
+        delay(2000);
+        MouseMove(2, 89);
+        delay(500);
+        Lclick();
+        break;
+      case 110:
+        delay(500);
+        MouseMove(90, 68);
+        delay(500);
+        Lclick();
+        delay(1000);
+        MouseMove(10, 10);
+        break;
+      case 109: //VPN
+        delay(500);
+        MouseMove(102, 62);
+        delay(500);
+        Lclick();
+        delay(1000);
+        MouseMove(102, 41);
+        delay(500);
+        Lclick();
+        delay(1000);
+        //MouseMove(77, 30);
+        MouseMove(92, 49); // 49 - 2, 53 - 3, 57 - 4
+        delay(500);
+        Lclick();
+        delay(1000);
+        MouseMove(10, 10);
+        break;
+      case 108:
+        delay(500);
+        MouseMove(84, 63);
+        delay(500);
+        Lclick();
+        delay(500);
+        break;
+      case 107:
+        delay(500);
+        MouseMove(49, 98);
+        delay(500);
+        Lclick();
+        delay(500);
+        break;
+      case 106: // смена 1 ги квеста
+        delay(500);
+        MouseMove(126, 84); //change
+        delay(500);
+        Lclick();
+        delay(1500);
+        MouseMove(77, 37); //ch-g1
+        delay(500);
+        Lclick();
+        delay(1500);
+        MouseMove(83, 70); //ok
+        delay(700);
+        Lclick();
+        delay(700);
+        MouseMove(85, 47); //g1
+        delay(600);
+        Lclick();
+        delay(600);
+        MouseMove(10, 10);
+        delay(3000);
+        break;
+      case 105: // смена 2 ги квеста
+        delay(500);
+        MouseMove(126, 84); //change
+        delay(500);
+        Lclick();
+        delay(1500);
+        MouseMove(77, 50); //ch-g3
+        delay(500);
+        Lclick();
+        delay(1500);
+        MouseMove(83, 70); //ok
+        delay(700);
+        Lclick();
+        delay(700);
+        MouseMove(85, 62); //g3
+        delay(600);
+        Lclick();
+        delay(600);
+        MouseMove(10, 10);
+        delay(3000);
+        break;
+      case 104:
+        Guild_q();
+        break;
+      case 103:
+        delay(500);
+        MouseMove(10, 80);
+        delay(1000);
+        Lclick();
+        delay(4000);
+        Keyboard.press(176);
+        delay(100);
+        Keyboard.release(176);
+        break;
+      case 102:
+        delay(500);
+        MouseMove(96, 52);
+        delay(1000);
+        Lclick();
+        delay(500);
+        break;
+      case 101:
+        delay(500);
+        MouseMove(89, 54); //net error
+        delay(500);
+        Lclick();
+        delay(500);
+        break;
+      case 100:
+        delay(100);
+        MouseMove(35, 36); //net error
+        delay(100);
+        Lclick();
+        delay(100);
+        MouseMove(67, 101); //net error
+        delay(100);
+        Lclick();
+        break;
+    }
+  }
+  delay(30);
+  if (!digitalRead(5)){ //&& !farm
+//    delay(400);
+//    Keyboard.press('m');
+//    delay(400);
+//    Keyboard.release('m');
+//    delay(400);
+    MouseMove(72, 28);
+
+//    delay(200);
+//    Mouse.move(0, 0, 10);
+//    delay(200);
+//    Mouse.move(0, 0, 10);
+//    delay(200);
+//    Mouse.move(0, 0, 10);
+//    delay(200);
+//    Mouse.press(MOUSE_LEFT);
+//    delay(300);
+//    for(int i=0; i<15; i++){
+//      delay(30);
+//      Mouse.move(20,12);
+//    }
+//    delay(300);
+//    Mouse.release(MOUSE_LEFT);
+//    delay(400);
+//    Keyboard.press('i');
+//    delay(300);
+//    Keyboard.release('i');
+//    delay(600);
+//    MouseMove(143, 77);//починка
+//    delay(200);
+//    Lclick();
+//    delay(300);
+//    MouseMove(78, 31);
+//    delay(500);
+//    Mouse.press(MOUSE_LEFT);
+//    delay(300);
+//    for(int i=0; i<9; i++){
+//      delay(10);
+//      Mouse.move(0,10);
+//    }
+//    for(int i=0; i<67; i++){
+//      delay(10);
+//      Mouse.move(10,0);
+//    }
+//    delay(300);
+//    Mouse.release(MOUSE_LEFT);
+//    delay(300);
+//    Keyboard.press('i');
+//    delay(300);
+//    Keyboard.release('i');
+//    delay(500);
+//
+//    pet_respawn();
+//    
+////    Keyboard.press('c');
+////    delay(300);
+////    Keyboard.release('c');
+////    delay(800);
+//    Keyboard.press('2');
+//    delay(300);
+//    Keyboard.release('2');
+//    delay(500);
+//    Keyboard.press(KEY_F1); //таргет
+//    delay(300);
+//    Keyboard.release(KEY_F1);
+//    delay(500);
+//    Keyboard.press(KEY_F6); //метка 1
+//    delay(300);
+//    Keyboard.release(KEY_F6);
+//    delay(300);
+//    grindCircle();
+//Keyboard.press(KEY_LEFT_GUI);
+//        delay(300);
+//        Keyboard.release(KEY_LEFT_GUI);
+//        delay(300);
+//        MouseMove(72, 100); //окно vm
+//        delay(300);
+//        Lclick();
+//        delay(300);
+//        MouseMove(72, 95); //клава
+//        delay(300);
+//        Lclick();
+//        delay(300);
+//        MouseMove(73, 78); //клава
+//        delay(300);
+//        Lclick();
+//        delay(300);
+//        MouseMove(24, 24); //основное окно аа1
+//        delay(300);
+//        Lclick();
+//        delay(300);
+  }
+  if (!digitalRead(3)){
+    //antiAfk();
+    // Keyboard.press(176);
+    // delay(600);
+    // Keyboard.release(176);
+    delay(400);
+    Keyboard.press('m');
+    delay(400);
+    Keyboard.release('m');
+    delay(400);
+    MouseMove(80, 60); // 50, 40 / 80, 40
+    delay(200);
+    Mouse.move(0, 0, 10);
+    delay(200);
+    Mouse.move(0, 0, 10);
+    delay(200);
+    Mouse.move(0, 0, 10);
+    delay(200);
+    Mouse.press(MOUSE_LEFT);
+    delay(300);
+    for(int i=0; i<15; i++){
+      delay(30);
+      Mouse.move(-20, -20); // 20, 12 / -30, 12
+    }
+    delay(300);
+    Mouse.release(MOUSE_LEFT);
+    delay(400);
+    Keyboard.press('i');
+    delay(300);
+    Keyboard.release('i');
+    delay(600);
+    MouseMove(147, 81);//починка
+    delay(200);
+    Lclick();
+    delay(300);
+    MouseMove(78, 36);
+    delay(500);
+    Mouse.press(MOUSE_LEFT);
+    delay(300);
+    for(int i=0; i<19; i++){
+      delay(10);
+      Mouse.move(0,10);
+    }
+    for(int i=0; i<82; i++){
+      delay(10);
+      Mouse.move(10,0);
+    }
+    delay(300);
+    Mouse.release(MOUSE_LEFT);
+    delay(300);
+    Keyboard.press('i');
+    delay(300);
+    Keyboard.release('i');
+    delay(500);
+    Keyboard.press('2');
+    delay(300);
+    Keyboard.release('2');
+    delay(500);
+    Keyboard.press(KEY_F1); //таргет
+    delay(300);
+    Keyboard.release(KEY_F1);
+    delay(500);
+    Keyboard.press(KEY_F6); //метка 1
+    delay(300);
+    Keyboard.release(KEY_F6);
+    delay(300);
+    //grindAhead();
+    
+    grindCircle2();
+    ////grind();
+    //MoveNull();
+//    MouseMove(0, 5);
+//    delay(70);
+//    Mouse.press(MOUSE_RIGHT);
+//    delay(30);
+//    Mouse.move(0,10);
+//    delay(30);
+//    Mouse.move(0,10);
+//    delay(30);
+//    Mouse.move(0,10);
+//    delay(30);
+//    Mouse.release(MOUSE_RIGHT);
+    //EnterGame();
+    //MouseMove(38, 36); // accept
+    //MouseMove(58, 21);//призыв
+    //MouseMove(23, 59); //launcher
+  }
+}
+
+void antiAfk(){
+  while(true){
+  delay(3000);
+  if (!digitalRead(5)){
+    delay(6000);
+    return;
+  }
+  Keyboard.press('d');
+  delay(200);
+  Keyboard.release('d');
+  delay(600);
+  }
+}
+
+void Guild_q(){
+  delay(600);
+  Keyboard.press(KEY_LEFT_SHIFT);//guild (ХОНОР!)
+  delay(600);
+  Keyboard.press('t');
+  delay(600);
+  Keyboard.release('t');
+  delay(600);
+  Keyboard.release(KEY_LEFT_SHIFT);
+  delay(3000);//tasks (3)
+  MouseMove(69, 27); // gu2 730 280 
+  delay(600);
+  Lclick();
+  delay(3000);
+  
+  MouseMove(85, 47); //930 500 g1
+  delay(600);
+  Lclick();
+  delay(1500);
+  MouseMove(85, 54); //580 g2
+  delay(600);
+  Lclick();
+  delay(1500);
+  MouseMove(85, 62); //670 g3
+  delay(600);
+  Lclick();
+  delay(2000);
+  MouseMove(10, 10);
+  }
+
+void inGame(){
+  //закрытие ги окна
+  delay(500);
+    Keyboard.press(KEY_F1); //таргет
+    delay(300);
+    Keyboard.release(KEY_F1);
+    delay(1000);
+    Keyboard.press(KEY_ESC); 
+    delay(300);
+    Keyboard.release(KEY_ESC);
+    delay(1000);
+    Keyboard.press(KEY_ESC);
+    delay(300);
+    Keyboard.release(KEY_ESC);
+    
+  delay(2000);
+  MouseMove(133, 17); //close 1396 175
+  delay(600);
+  Lclick();
+  delay(1500);
+  for(int i=0; i<10; i++){
+    Keyboard.press('8'); //honor
+    delay(700);
+    Keyboard.release('8');
+    delay(1500);
+  }
+  delay(1500);
+  
+  Keyboard.press('9');//gloves
+  delay(2000);
+  Keyboard.release('9');
+  delay(5000);
+  MouseMove(3, 94); //bottle 30 990
+  delay(1000);
+  Lclick();
+  delay(1500);
+  MouseMove(3, 94); //bottle 30 990
+  delay(1500);
+  Lclick();
+  delay(1500);
+  MouseMove(111, 26); //mob 1168 285
+  delay(1500);
+  Lclick();
+  delay(1500);
+  Keyboard.press('7');//use bottle
+  delay(500);
+  Keyboard.release('7');
+  delay(1000);
+  Keyboard.press('2'); //pickaxe
+  delay(500);
+  Keyboard.release('2');
+  delay(1000);
+  Keyboard.press('3'); //pickaxe
+  delay(500);
+  Keyboard.release('3');
+  delay(1000);
+  MouseMove(164, 98); //calendar 1755 1000
+  delay(3000);
+  Lclick();
+  delay(2000);
+  MouseMove(58, 29); //present 600 310
+  delay(2000);
+  Lclick();
+  delay(2000);
+  MouseMove(127, 76); //take 1345 800
+  delay(1000);
+  Lclick();
+  delay(2000);
+
+  MouseMove(71, 29); //battle pass 740
+  delay(1000);
+  Lclick();
+  delay(1000);
+  MouseMove(98, 62); //activation 3 task 650
+  delay(1000);
+  Lclick();
+  delay(300);
+  MouseMove(93, 45); //return 975 466
+  delay(1000);
+  Lclick();
+
+  //КОШЕЛЬКИ + ДЕЛИК (ПРОВЕРКА НА ПУСТОТУ)
+  delay(5000);
+
+}
+
+void ExitGame(){
+  delay(500);
+  MouseMove(108, 26); //mob 1168 285
+  delay(1000);
+  Lclick();
+  delay(500);
+  MouseMove(3, 94); //bottle 30 990
+  delay(500);
+  Lclick();
+  delay(2000);
+  Keyboard.press(KEY_F1); //таргет
+  delay(300);
+  Keyboard.release(KEY_F1);
+  delay(200);
+  Keyboard.press(KEY_ESC);
+  delay(300);
+  Keyboard.release(KEY_ESC);
+  delay(300);
+  Keyboard.press(KEY_ESC);
+  delay(300);
+  Keyboard.release(KEY_ESC);
+  delay(300);
+  Keyboard.press(KEY_ESC);
+  delay(300);
+  Keyboard.release(KEY_ESC);
+  delay(300);
+  Keyboard.press(KEY_ESC);
+  delay(300);
+  Keyboard.release(KEY_ESC);
+  delay(300);
+  MouseMove(110, 66); //exit
+  delay(300);
+  Lclick();
+  MouseMove(106, 44); //net error
+   delay(500);
+   Lclick();
+   delay(1000);
+}
+
+void DailyChange(){
+  MouseMove(110, 99); // gold 32, 51  1166 1045
+  delay(600);
+  Lclick();
+  delay(600);
+  MouseMove(126, 76); //change task 1330 800
+  delay(1000);
+  Lclick();
+  delay(500);
+  MouseMove(75, 36);//choose 800 450 - 2 (380 - 1) 
+  delay(500);
+  Lclick();
+  delay(500);
+  MouseMove(85, 73);//ok 910 770 (85, 71)  873 767 
+  //Mouse.move(5, 0);
+  delay(500);
+  Lclick();
+  delay(500);
+  MouseMove(113, 27);//cancel 1200 285
+  delay(500);
+  Lclick();
+  delay(500);
+  MouseMove(95, 63); //activation 3 task 650
+  delay(1000);
+  Lclick();
+  delay(500);
+  //MouseMove(110, 26);//cancel 1200 285
+  //delay(500);
+  Lclick();
+  delay(300);
+  MouseMove(94, 45); //return 975 466
+  delay(1000);
+  Lclick();
+  delay(300);
+  MouseMove(106, 40); //close activate window (x5 star)
+  delay(1000);
+  Lclick();
+}
+
+void Gold(){
+  //for(int j=0;j<2;j++){
+  delay(300);
+  Keyboard.press(KEY_LEFT_SHIFT);
+  delay(600);
+  MouseMove(110, 99); // gold 32, 51  1166 1045  1163 1035
+  delay(600);
+  Lclick();
+  delay(1000);
+  Keyboard.release(KEY_LEFT_SHIFT);
+  delay(1000);
+}
+
+void Auroriz(int y2){
+  MouseMove(138, 13); //change user
+  delay(3000);
+  Lclick();
+  delay(2000);
+  MouseMove(138, y2);
+  delay(3000);
+  Lclick();
+}
+
+void MouseMove(int x, int y){
+  MoveNull();
+  for(int i=0; i<y; i++){
+    Mouse.move(0,10);
+  }
+  for(int i=0; i<x; i++){
+    Mouse.move(10,0);
+  }
+}
+
+void Lclick(){
+  Mouse.press(MOUSE_LEFT);
+  delay(50);
+  Mouse.release(MOUSE_LEFT);
+}
+
+void MoveNull(){
+  delay(200);
+  for(int i=0; i<20; i++){
+    delay(5);
+    Mouse.move(-50, -50);
+  }
+  delay(200);
+}
+/* маг круг 90  (30*60/20)*/
+void grind(){
+  delay(1000);
+  while(true){
+    for(int i=0; i<15; i++){
+      Keyboard.press('1');
+      delay(750);
+      Keyboard.release('1');
+      fix_dir();
+      if(i==7){
+        delay(300);
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+      }
+      if (!digitalRead(5)) {
+        delay(4000);
+        return;
+      }
+    }
+    Keyboard.press('1');//добивание
+    delay(3500);
+    Keyboard.release('1');
+    delay(1500);
+    Keyboard.press('3');
+    delay(500);
+    Keyboard.release('3');
+    delay(600);
+    Keyboard.press('4'); // хил
+    delay(300);
+    Keyboard.release('4');
+    mage_cir+=1;
+    
+    if(mage_cir == 70){
+      mage_cir = 0;
+      Keyboard.press('1');//добитие
+      delay(4000);
+      Keyboard.release('1');
+      delay(500);
+
+      //починка
+      MouseMove(147, 96);
+      delay(700);
+      Lclick();
+      delay(500);
+      //MouseMove(92, 42);
+      //delay(100);
+      
+      Keyboard.press('5'); //бафф
+      delay(500);
+      Keyboard.release('5');
+      delay(500);
+      Keyboard.press('5'); //бафф
+      delay(500);
+      Keyboard.release('5');
+    }
+    if(mage_cir%5 == 0){
+      Keyboard.press('2');
+      delay(500);
+      Keyboard.release('2');
+    } 
+  }
+}
+
+void grindCircle(){
+  delay(1000);
+  int fortune_buff = 0;
+  while(true){
+    for(int i=0; i<21; i++){ //21 16
+      Keyboard.press('1');//300
+      delay(300);
+      Keyboard.release('1');
+      //fix_dir_crl();
+      Keyboard.press(KEY_HOME);
+      delay(20);
+      Keyboard.release(KEY_HOME);
+      delay(50);
+      MouseMove(0, 5);
+      delay(50);
+      Mouse.press(MOUSE_RIGHT);
+      delay(30);
+      Mouse.move(0,10);
+      delay(30);
+      Mouse.move(0,10);
+      delay(30);
+      Mouse.move(0,10);
+      delay(30);
+      Mouse.release(MOUSE_RIGHT);
+      /*for(int m=0; m<3; m++){
+        Mouse.press(MOUSE_RIGHT);
+        delay(35);
+        Mouse.move(-10,0);
+        delay(20);
+        Mouse.release(MOUSE_RIGHT);
+        delay(20);
+      }*/
+      if(i==11){
+        delay(400);
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+        delay(300);
+        Keyboard.press('6'); // хил пета
+        delay(100);
+        Keyboard.release('6');
+        delay(100);
+      }
+      if (!digitalRead(3)) {
+        delay(4000);
+        return;
+      }
+    }
+    Keyboard.press('1');//добивание
+    delay(2500);
+    Keyboard.release('1');
+    delay(200);
+    incomingB = Serial.read();
+      if (incomingB == 79){
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+        Fix_pos();
+        delay(400);
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+      }else if(incomingB == 65){
+        Keyboard.press('1'); //добивание
+        delay(4000);
+        Keyboard.release('1');
+        delay(200);
+        MouseMove(88, 51);
+        delay(200);
+        for(int i=0; i<5;i++){ //шаровые
+          Keyboard.press('e');
+          delay(200);
+          Keyboard.release('e');
+          delay(300);
+        }
+        ExitGame();
+        delay(2500);
+        //ExitGame();
+        return;
+      }
+      
+     delay(200);
+    if(mage_cir%2 == 0){
+      delay(300);
+      Keyboard.press('2');
+      delay(100);
+      Keyboard.release('2');
+      delay(200);
+      Keyboard.press('v'); // щит
+      delay(200);
+      Keyboard.release('v');
+      delay(1100);
+    }else{
+      delay(900); 
+    }
+    /*if(mage_cir == 36){
+      delay(50);
+      Keyboard.press('1');//добитие
+      delay(4000);
+      Keyboard.release('1');
+      delay(600);
+      Open_map();
+      delay(50);
+    }*/
+    if (mage_cir == 29){
+      pet_respawn();
+    }
+    if (mage_cir == 58){
+      delay(50);
+      pet_respawn();
+      delay(50);
+      Keyboard.press('4'); // хил
+      delay(300);
+      Keyboard.release('4');
+      delay(200);
+      mage_cir = 0;
+      Keyboard.press('1');//добитие
+      delay(4000);
+      Keyboard.release('1');
+      delay(500);
+      //Open_map();
+      //починка
+      //MouseMove(79, 59);
+      //MouseMove(147, 96);
+      MouseMove(154, 75);
+      delay(700);
+      Lclick();
+      delay(1000);
+      fortune_buff++;
+      if (fortune_buff == 2){
+        Keyboard.press('5'); //бафф
+        delay(2500);
+        Keyboard.release('5');
+        delay(200);
+        Keyboard.press('5'); //бафф
+        delay(500);
+        Keyboard.release('5');
+        delay(3000);
+        fortune_buff = 0;
+      }
+//      Keyboard.press('5'); //бафф
+//      delay(2500);
+//      Keyboard.release('5');
+//      delay(200);
+//      Keyboard.press('5'); //бафф
+//      delay(500);
+//      Keyboard.release('5');
+//      delay(3000);
+      Keyboard.press('y'); //еда
+      delay(200);
+      Keyboard.release('y');
+      delay(3000);
+      Keyboard.press('y'); //еда выбор
+      delay(200);
+      Keyboard.release('y');
+      delay(3000);
+      Keyboard.press('q'); //бафф исцеления
+      delay(200);
+      Keyboard.release('q');
+      delay(1000);
+        //фикс карты
+      MouseMove(83, 39);//материк
+      delay(200);
+      Lclick();
+      delay(200);
+      MouseMove(83, 39);//лока
+      delay(200);
+      Lclick();
+      delay(200);
+      MouseMove(50, 40);
+      delay(200);
+      Mouse.move(0, 0, 10);//скролл
+      delay(200);
+      Mouse.move(0, 0, 10);
+      delay(200);
+      Mouse.move(0, 0, 10);
+      delay(200);
+      Mouse.press(MOUSE_LEFT);
+      delay(300);
+      for(int i=0; i<15; i++){
+        delay(30);
+        Mouse.move(20,12);
+      }
+      delay(300);
+      Mouse.release(MOUSE_LEFT);
+      delay(200);
+    }
+    Keyboard.press('4'); // хил
+    delay(300);
+    Keyboard.release('4');
+    delay(200);
+    //MouseMove(21, 2); //hp
+    Keyboard.press(KEY_F2); //таргет
+    delay(300);
+    Keyboard.release(KEY_F2);
+    delay(200);
+    Lclick();
+    delay(120);
+    Keyboard.press('3');
+    delay(400);
+    Keyboard.release('3');
+    delay(200);
+    mage_cir+=1;
+  }
+}
+
+void grindAhead(){
+  delay(1000);
+  while(true){
+    for(int i=0; i<12; i++){ //для основного пк 20 (15)
+      Keyboard.press('1');
+      delay(1000);
+      Keyboard.release('1');
+      fix_dir();
+      
+      if(i==7){
+        delay(400);
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+      }
+      if(i==12){
+        delay(300);
+        Keyboard.press('3'); // хил
+        delay(50);
+        Keyboard.release('3');
+      }
+      if (!digitalRead(3)) {
+        delay(4000);
+        return;
+      }
+    }
+    Keyboard.press('1');//добивание
+    delay(2500);
+    Keyboard.release('1');
+    if(mage_cir%2 == 0){
+      delay(300);
+      Keyboard.press('2');
+      delay(100);
+      Keyboard.release('2');
+      delay(200);
+      Keyboard.press('v'); // щит
+      delay(200);
+      Keyboard.release('v');
+      delay(1100);
+    }else{
+      delay(900); 
+    }
+    Keyboard.press('4'); // хил
+    delay(300);
+    Keyboard.release('4');
+    delay(650);
+    Keyboard.press('3');
+    delay(400);
+    Keyboard.release('3');
+    delay(200);
+    mage_cir+=1;
+    
+    if(mage_cir == 64){
+      mage_cir = 0;
+      Keyboard.press('1');//добитие
+      delay(4000);
+      Keyboard.release('1');
+      delay(1500);
+
+      //починка
+      MouseMove(154, 75);
+      //MouseMove(147, 96);
+      delay(700);
+      Lclick();
+      delay(2200);
+      
+      Keyboard.press('5'); //бафф
+      delay(2500);
+      Keyboard.release('5');
+      pet_respawn();
+    }
+  }
+}
+
+void fix_dir(){
+    MouseMove(0, 20);
+    Mouse.press(MOUSE_RIGHT);
+    for(int x=0; x<3; x++){
+      delay(30);
+      Mouse.move(0,1);
+    }
+    /*for(int x=0; x<5; x++){
+      delay(30);
+      Mouse.move(0,-1);
+    }*/
+    Mouse.release(MOUSE_RIGHT);
+}
+
+void fix_dir_crl(){
+  MouseMove(25, 0);
+  delay(10);
+  Mouse.press(MOUSE_RIGHT);
+  for(int x=0; x<6; x++){
+    delay(10);
+    Mouse.move(-80,0);
+  }
+  Mouse.release(MOUSE_RIGHT);
+}
+
+void Gold_open(){
+  MouseMove(0, 20);
+  delay(1000);
+  while(true){
+    MouseMove(10, 10);
+    delay(60);
+    Lclick();
+    delay(60);
+    Keyboard.press(KEY_RIGHT_SHIFT);
+    delay(600);
+    MouseMove(108, 96);
+    delay(600);
+    Lclick();
+    delay(1000);
+    Keyboard.release(KEY_RIGHT_SHIFT);
+    for(int g=0;g<50;g++){
+      delay(1000);
+      if (!digitalRead(3)) {
+        delay(4000);
+        return;
+      }
+    }
+    MouseMove(108, 96);
+    delay(600);
+    Lclick();
+    delay(600);
+    Keyboard.press('7'); //бафф
+    delay(1000);
+    Keyboard.release('7');
+    delay(600);
+  }
+}
+
+void Fix_pos(){
+  //om = 0;
+    delay(80);
+    MouseMove(0, 5);
+    delay(70);
+    Mouse.press(MOUSE_RIGHT);
+    delay(30);
+    Mouse.move(0,10);
+    delay(30);
+    Mouse.move(0,10);
+    delay(30);
+    Mouse.move(0,10);
+    delay(30);
+    Mouse.release(MOUSE_RIGHT);
+    /*MouseMove(60, 45);
+    Mouse.press(MOUSE_LEFT);
+    delay(200);
+    for(int j=0;j<15;j++){
+       delay(10);
+      Mouse.move(10,10); 
+    }
+    delay(80);
+    Mouse.release(MOUSE_LEFT);
+    delay(80);*/
+    Serial.println(2);
+    
+    for(int j=0;j<30;j++){
+      delay(250);
+      incomingB = Serial.read();
+      if(incomingB == 121){
+        //Keyboard.press('1');
+       //delay(3400);
+       //Keyboard.release('1');
+       //delay(400);
+       Keyboard.press('w');
+       delay(1000);
+       Keyboard.release('w');
+       delay(20);
+       //Keyboard.press('1');
+       //delay(3300);
+       //Keyboard.release('1');
+       //delay(20);
+       //Serial.println(3);
+       //delay(400);
+       break;
+       //forward = true;
+      }
+    }
+    Keyboard.press('4'); //хил
+    delay(300);
+    Keyboard.release('4');
+    //delay(2500);
+//    for(int j=0;j<30;j++){
+//       delay(200);
+//       incomingB = Serial.read();
+//       if (incomingB == 93)
+//         delay(400); //1528 233
+////         MouseMove(141, 22);
+////         delay(40);
+////         Lclick();
+////         delay(40);
+//         break;
+//    }
+
+
+    for(int j=0;j<45;j++){
+       delay(200);
+       incomingB = Serial.read();
+       //Serial.available() > 0
+       if (Serial.available() > 0 && incomingB < 120 && incomingB > 111){
+         //delay(40);
+         //delay(40);
+         switch (incomingB){
+          case 119:
+            //MouseMove(76, 41);
+            //delay(150);
+            MouseMove(69, 33);
+            //delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            delay(150);
+            Keyboard.press(KEY_DELETE);
+            delay(200);
+            Keyboard.release(KEY_DELETE);
+            delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            
+            delay(66);
+
+            break;
+          case 118:
+            //MouseMove(91, 36);
+            //delay(150);
+            MouseMove(92, 33);
+            //delay(150);
+            Keyboard.press('w');
+            delay(1700);
+            Keyboard.release('w');
+            delay(66);
+
+            delay(66);
+         //Lclick();
+            break;
+          case 117:
+            //MouseMove(101, 38);
+            //delay(150);
+            MouseMove(111, 35);
+            //delay(150);
+            Keyboard.press('w');
+            delay(800);
+            Keyboard.release('w');
+            delay(150);
+            Keyboard.press(KEY_HOME);
+            delay(1500);
+            Keyboard.release(KEY_HOME);
+            delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            delay(66);
+
+            delay(66);
+         //Lclick();
+            break;
+          case 116:
+            //MouseMove(105, 50);
+            //delay(150);
+            MouseMove(102, 48);
+            //delay(150);
+            Keyboard.press(KEY_HOME);
+            delay(200);
+            Keyboard.release(KEY_HOME);
+            delay(150);
+            Keyboard.press('w');
+            delay(1700);
+            Keyboard.release('w');
+            delay(66);
+
+            delay(66);
+         //Lclick();
+            break;
+          case 115:
+            //MouseMove(100, 63);
+            //delay(150);
+            MouseMove(103, 65);
+            //delay(150);
+            Keyboard.press(KEY_INSERT);
+            delay(200);
+            Keyboard.release(KEY_INSERT);
+            delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            delay(150);
+            Keyboard.press(KEY_DELETE);
+            delay(200);
+            Keyboard.release(KEY_DELETE);
+            delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            
+            delay(66);
+
+            delay(66);
+         //Lclick();
+            break;
+          case 114:
+            //MouseMove(88, 64);
+            //delay(150);
+            MouseMove(93, 67);
+            //delay(150);
+            Keyboard.press(KEY_INSERT);
+            delay(200);
+            Keyboard.release(KEY_INSERT);
+            delay(150);
+            Keyboard.press('w');
+            delay(2100);
+            Keyboard.release('w');
+            
+            delay(66);
+
+            delay(66);
+        // Lclick();
+            break;
+          case 113:
+            //MouseMove(74, 60);
+            //delay(150);
+            MouseMove(74, 62);
+            //delay(150);
+            Keyboard.press(KEY_INSERT);
+            delay(200);
+            Keyboard.release(KEY_INSERT);
+            delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            delay(150);
+            Keyboard.press(KEY_HOME);
+            delay(200);
+            Keyboard.release(KEY_HOME);
+            delay(150);
+            Keyboard.press('w');
+            delay(1500);
+            Keyboard.release('w');
+            
+            delay(66);
+
+            delay(66);
+         //Lclick();
+            break;
+          case 112:
+            //MouseMove(73, 49);
+           // delay(150);
+            MouseMove(70, 55);
+            //delay(150);
+            Keyboard.press(KEY_DELETE);
+            delay(200);
+            Keyboard.release(KEY_DELETE);
+            delay(150);
+            Keyboard.press('w');
+            delay(1700);
+            Keyboard.release('w');
+
+            delay(66);
+
+            delay(66);
+        // Lclick();
+            break;
+          default:
+            MouseMove(1, 1);
+            break;
+         }
+         
+         //break;
+       }
+    }
+    
+//    if(om == -1){ // && forward
+//      MouseMove(10, 10);
+//      delay(150);
+//      Keyboard.press(KEY_INSERT);
+//      delay(200);
+//      Keyboard.release(KEY_INSERT);
+//      delay(150);
+//      Keyboard.press('w');
+//      delay(1000);
+//      Keyboard.release('w');
+//      delay(80);
+//
+//    }
+//    if(!forward){
+//      delay(80);
+//      Serial.println(4);
+//      delay(80);
+//    }
+    delay(70);
+    Keyboard.press('1');
+    delay(3400);
+    Keyboard.release('1');
+    delay(400);
+}
+
+void pet_respawn(){
+  MouseMove(54, 89);
+    delay(110);
+    Lclick();
+    delay(500);
+    MouseMove(40, 88);
+    delay(110);
+    Lclick();
+    delay(110);
+    MouseMove(40, 90);
+    delay(110);
+    Lclick();
+    delay(110);
+    MouseMove(40, 88);
+    delay(110);
+    Lclick();
+    delay(110);
+    MouseMove(43, 93);
+    delay(333);
+    Mouse.press(MOUSE_RIGHT);
+    delay(110);
+    Mouse.release(MOUSE_RIGHT);
+    delay(110);
+    MouseMove(46, 93);
+    delay(333);
+    Mouse.press(MOUSE_RIGHT);
+    delay(110);
+    Mouse.release(MOUSE_RIGHT);
+    delay(333);
+    MouseMove(50, 93);
+    delay(110);
+    Mouse.press(MOUSE_RIGHT);
+    delay(110);
+    Mouse.release(MOUSE_RIGHT);
+}
+
+void grindCircle2(){
+  delay(1000);
+  int fortune_buff = 0;
+  while(true){
+    for(int i=0; i<58; i++){ //21 16 65
+      Keyboard.press('1');
+      //delay(20);//300
+      Keyboard.release('1');
+      //fix_dir_crl();
+//      MouseMove(25, 0);
+//      delay(10);
+//      Mouse.press(MOUSE_RIGHT);
+//      for(int x=0; x<6; x++){
+//        delay(10);
+//        Mouse.move(-100, 0);
+//      }
+//      Mouse.release(MOUSE_RIGHT);
+      Keyboard.press(KEY_HOME);
+      //delay(20);
+      Keyboard.release(KEY_HOME);
+      delay(30);
+      MouseMove(0, 5);
+      delay(30);
+      Mouse.press(MOUSE_RIGHT);
+      delay(30);
+      Mouse.move(0,10);
+      delay(30);
+      Mouse.move(0,10);
+      delay(30);
+      Mouse.move(0,10);
+      delay(30);
+      Mouse.release(MOUSE_RIGHT);
+  
+//      if(i%8 == 0){
+//        delay(400);
+//        Keyboard.press('3');
+//        delay(100);
+//        Keyboard.release('3');
+//        delay(200);
+//      }
+      if(i == 32 || i == 16){
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+        delay(300);
+        Keyboard.press(KEY_F2); //таргет
+        delay(300);
+        Keyboard.release(KEY_F2);
+        // Keyboard.press('6'); // хил пета
+        // delay(100);
+        // Keyboard.release('6');
+        // delay(100);
+      }
+
+      if (!digitalRead(3)) {
+        delay(4000);
+        return;
+      }
+    }
+    Keyboard.press('1');//добивание
+    delay(4000);
+    Keyboard.release('1');
+    delay(200);
+    incomingB = Serial.read();
+      if (incomingB == 79){
+        delay(400);
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+        Fix_pos();
+        delay(400);
+        Keyboard.press('4'); // хил
+        delay(300);
+        Keyboard.release('4');
+      }else if(incomingB == 65){
+        Keyboard.press('1'); //добивание
+        delay(5000);
+        Keyboard.release('1');
+        delay(200);
+        Keyboard.press('1'); //добивание
+        delay(5000);
+        Keyboard.release('1');
+        delay(200);
+        //MouseMove(88, 51);
+        // delay(200);
+        // for(int i=0; i<5;i++){ //шаровые
+        //   Keyboard.press('e');
+        //   delay(200);
+        //   Keyboard.release('e');
+        //   delay(300);
+        // }
+        ExitGame();
+        delay(2500);
+        //ExitGame();
+        return;
+      }
+      
+     
+      delay(400);
+//      Keyboard.press('c');
+//      delay(500);
+//      Keyboard.release('c');
+//      delay(400);
+      Keyboard.press('4'); // хил
+      delay(300);
+      Keyboard.release('4');
+      delay(400);
+      Keyboard.press('2');
+      delay(300);
+      Keyboard.release('2');
+//      if(mage_cir%2 == 0){
+//      //delay(300);
+//      Keyboard.press('2');
+//      delay(100);
+//      Keyboard.release('2');
+////      delay(200);
+////      Keyboard.press('v'); // щит
+////      delay(200);
+////      Keyboard.release('v');
+////      delay(1100);
+////    }else{
+////      delay(900); 
+//     }
+    /*if(mage_cir == 36){
+      delay(50);
+      Keyboard.press('1');//добитие
+      delay(4000);
+      Keyboard.release('1');
+      delay(600);
+      Open_map();
+      delay(50);
+    }*/
+//    Keyboard.press(KEY_LEFT_GUI);
+//    delay(300);
+//    Keyboard.release(KEY_LEFT_GUI);
+//    delay(300);
+//    MouseMove(72, 100); //окно vm
+//    delay(300);
+//    Lclick();
+//    delay(300);
+//    MouseMove(72, 95); //клава
+//    delay(300);
+//    Lclick();
+//    delay(300);
+//    MouseMove(71, 78); //клава
+//    delay(300);
+//    Lclick();
+//    delay(300);
+//    MouseMove(24, 24); //основное окно аа1
+//    delay(300);
+//    Lclick();
+//    delay(300);
+//    Keyboard.press('4');
+//    delay(300);
+//    Keyboard.release('4');
+     if (mage_cir%2 == 0){
+       //pet_respawn();
+       Keyboard.press(KEY_LEFT_GUI);
+       delay(300);
+       Keyboard.release(KEY_LEFT_GUI);
+       delay(300);
+       MouseMove(72, 100); //окно vm
+       delay(300);
+       Lclick();
+       delay(300);
+       //MouseMove(72, 95); //клава
+       //delay(300);
+       //Lclick();
+       //delay(300);
+       //MouseMove(71, 78); //клава
+       MouseMove(90, 29); // окно aa на vm
+       delay(300);
+       Lclick();
+       delay(300);
+       MouseMove(24, 24); //основное окно аа1
+       delay(300);
+       Lclick();
+       delay(300);
+       Keyboard.press('4');
+       delay(300);
+       Keyboard.release('4');
+     }
+    if (mage_cir == 30){
+      delay(50);
+      //pet_respawn();
+      delay(50);
+      Keyboard.press('4'); // хил
+      delay(300);
+      Keyboard.release('4');
+      delay(200);
+      mage_cir = 0;
+      Keyboard.press('1');//добитие
+      delay(4000);
+      Keyboard.release('1');
+      delay(500);
+      //Open_map();
+      //починка
+      //MouseMove(79, 59);
+      //MouseMove(147, 96);
+      MouseMove(157, 77);
+      delay(700);
+      Lclick();
+      delay(1000);
+      //fortune_buff++;
+      if (fortune_buff == 0){
+//        Keyboard.press('5'); //бафф
+//        delay(2500);
+//        Keyboard.release('5');
+//        delay(200);
+//        Keyboard.press('5'); //бафф
+//        delay(500);
+//        Keyboard.release('5');
+//        delay(3000);
+//        Keyboard.press(KEY_LEFT_GUI);
+//        delay(300);
+//        Keyboard.release(KEY_LEFT_GUI);
+//        delay(300);
+//        MouseMove(72, 100); //окно vm
+//        delay(300);
+//        Lclick();
+//        delay(300);
+//        MouseMove(72, 95); //клава
+//        delay(300);
+//        Lclick();
+//        delay(300);
+//        MouseMove(73, 78); //клава
+//        delay(300);
+//        Lclick();
+//        delay(300);
+//        MouseMove(24, 24); //основное окно аа1
+//        delay(300);
+//        Lclick();
+//        delay(300);
+        fortune_buff = 0;
+      }
+//      Keyboard.press('5'); //бафф
+//      delay(2500);
+//      Keyboard.release('5');
+//      delay(200);
+//      Keyboard.press('5'); //бафф
+//      delay(500);
+//      Keyboard.release('5');
+//      delay(3000);
+      Keyboard.press('y'); //еда
+      delay(200);
+      Keyboard.release('y');
+      delay(4000);
+      Keyboard.press('t'); //еда выбор
+      delay(200);
+      Keyboard.release('t');
+      delay(3000);
+      Keyboard.press('q'); //бафф исцеления
+      delay(200);
+      Keyboard.release('q');
+      delay(2000);
+      Keyboard.press('5'); //бафф
+      delay(500);
+      Keyboard.release('5');
+        //фикс карты
+      MouseMove(85, 44);//материк
+      delay(200);
+      Lclick();
+      delay(200);
+      MouseMove(85, 44);//лока
+      delay(200);
+      Lclick();
+      delay(200);
+      MouseMove(80, 60); // 50, 40
+      delay(200);
+      Mouse.move(0, 0, 10);//скролл
+      delay(200);
+      Mouse.move(0, 0, 10);
+      delay(200);
+      Mouse.move(0, 0, 10);
+      delay(200);
+      Mouse.press(MOUSE_LEFT);
+      delay(300);
+      for(int i=0; i<15; i++){
+        delay(30);
+        Mouse.move(-20, -20); // 20, 12
+      }
+      delay(300);
+      Mouse.release(MOUSE_LEFT);
+      delay(200);
+    }
+    Keyboard.press('4'); // хил
+    delay(300);
+    Keyboard.release('4');
+    delay(200);
+    //MouseMove(21, 2); //hp
+    Keyboard.press(KEY_F2); //таргет
+    delay(300);
+    Keyboard.release(KEY_F2);
+    delay(200);
+    Lclick();
+    delay(120);
+//    Keyboard.press('3');
+//    delay(400);
+//    Keyboard.release('3');
+//    delay(200);
+    mage_cir+=1;
+  }
+}
