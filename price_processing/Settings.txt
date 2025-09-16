@@ -1,0 +1,16 @@
+host:127.0.0.1
+user:postgres
+password:pass
+db_name:price_processing
+Адрес почты получателя:email
+Пароль (IMAP):pass
+Папка для сырых файлов (1):D:\other\price_processing\mail_files
+Папка для сырых файлов (1.1):D:\other\price_processing\mail_2
+Папка для справочников:D:\other\price_processing\тз
+Путь до обработанных данных (2):D:\other\price_processing\res2
+Путь до обработанных данных (3):D:\other\price_processing\res3
+Путь до исключенных данных:D:\other\price_processing\exp
+Путь до итоговых прайсов:D:\other\price_processing\final
+Путь до итоговых прайсов (расширенный формат):D:\other\price_processing\for_info
+Путь до отправленных прайсов:D:\other\price_processing\sended
+Количество потоков:2

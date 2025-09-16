@@ -1,0 +1,428 @@
+price_processing
+
+
+CREATE TABLE pre_res (
+	id serial,
+        КлючП varchar(256),
+        АртикулП varchar(256),
+        БрендП varchar(256),
+        НаименованиеП varchar(256),
+        КоличествоП integer,
+        ЦенаП NUMERIC(12,2),
+        КратностьП integer default 1,
+        ПримечаниеП varchar(256),
+        Артикул varchar(256),
+	Бренд varchar(256),
+        Наименование varchar(500),
+        Количество integer,
+        Цена NUMERIC(12,2),
+	Валюта varchar(20),
+        Кратность integer,
+	Цена_поставщика_с_издержками NUMERIC(12,2),
+        Код_поставщика varchar(150),
+	Товарный_вид varchar(50),
+        Производитель_заполнен varchar(256),
+        ИслючитьИзПрайса varchar(80),
+        Запрет_продаж varchar(50),
+	Разрешение_на_продажу varchar(1000),
+	Цена_Л NUMERIC(12,2),
+	Кратность_лота integer
+        );
+CREATE INDEX pre_res_keyS_index ON pre_res(КлючП);
+CREATE INDEX pre_res_articleS_brandS_index ON pre_res(АртикулП, БрендП);
+CREATE INDEX pre_res_articleS_nameS_index ON pre_res(АртикулП, НаименованиеП);
+
+
+CREATE TABLE Справочник_товаров_поставщиков(
+	Прайс varchar(50),
+        Ключ1 varchar(256),
+        АртикулПоставщика varchar(256),
+        ПроизводительПоставщика varchar(256),
+        НаименованиеПоставщика varchar(256),
+	Производитель varchar(256),
+	Артикул varchar(256),
+	Наименование varchar(256),
+	ЦенаПоставщика numeric(12,2),
+	УбратьШтуки real,
+	КратностьПоставщика REAL,
+	Товарный_вид varchar(50),
+	Запрет_продажи varchar(50)
+        );
+CREATE INDEX s_goods_key1_index ON Справочник_товаров_поставщиков(Ключ1);
+CREATE INDEX s_goods_articleS_brandS_index ON Справочник_товаров_поставщиков(АртикулПоставщика, ПроизводительПоставщика);
+CREATE INDEX s_goods_articleS_nameS_index ON Справочник_товаров_поставщиков(АртикулПоставщика, НаименованиеПоставщика);
+
+create table Настройки_прайса_поставщика (
+	Издержки real,
+	Код_поставщика varchar(10),
+	Можем_купить varchar(20),
+	Работаем varchar(20),
+	Почта varchar(256),
+	Условие_имени_файла varchar(20),
+	Срок_обновление_не_более real,
+	Имя_файла varchar(256),
+	Прайс_оптовый varchar(20),
+	Цену_считать_базовой varchar(20),
+	В_прайс real,
+	Краткое_наименование integer,
+	Закупка_для_оборотных_средств varchar(20),
+	Разрешения_ПП varchar,
+	Лот_поставщика real,
+	К_Превышения_базовой_цены real,
+	Лот_удобный_нам real,
+	Обрабатываем varchar(20),
+	Стандартизируем varchar(20),
+	Код_прайса varchar(10),
+	Сохраняем varchar(20),
+	Наценка_мин real,
+	Наценка_опт real,
+	Наценка_макс real,
+	Процент_отгрузки real,
+	Отсрочка real,
+	Наценка_для_ОС real,
+	Процент_изменения_строк real,
+	Процент_изменения_цены real,
+	Рейтинг_поставщика real
+);
+
+create table exchange_rate(
+	сode varchar(20),
+	rate real
+);
+
+create table Справочник_проблемных_товаров(
+	Код_прайса varchar(10),
+	Артикул varchar(256),
+	Бренд varchar(256),
+	Разрешение_покупателю varchar(1000)
+);
+
+create table Справочник_слов_исключений(
+	Код_прайса varchar(20),
+	Условие varchar(50),
+	Столбец_поиска varchar(100),
+	Текст varchar(256)
+);
+
+CREATE TABLE file_property(
+    	id UUID primary key default gen_random_uuid(),
+    	active boolean,
+    	file_name varchar(100),
+    	skiprows integer,
+    	skipfooter integer,
+	check_type integer
+);
+
+
+CREATE TABLE headers(
+    	id_property UUID,
+    	id_row integer,
+    	id_col integer,
+	name varchar(100),
+    	check_type varchar(10),
+    	col integer,
+    	conv_col integer,
+	FOREIGN KEY (id_property) REFERENCES file_property (id) ON DELETE CASCADE
+);
+
+CREATE TABLE brands_list(
+	id UUID primary key default gen_random_uuid(),
+	name varchar(100) unique
+);
+
+CREATE TABLE brands_settings(
+	id UUID,
+	name varchar(100),
+	char_limit integer,
+	price_inc real,
+	count_inc real,
+	FOREIGN KEY (id) REFERENCES brands_list (id) ON DELETE CASCADE		
+);
+
+CREATE TABLE Время_изменений_справочники(
+        Название_файла varchar(256),
+        Время_изменения varchar(256)
+        );
+
+
+CREATE TABLE Время_изменений_почта(
+	Полное_название varchar(256),
+        Название_файла varchar(256),
+        Время_изменения varchar(256)
+        );
+
+CREATE TABLE Время_изменений_выход2(
+        Название_файла varchar(256),
+        Время_изменения varchar(256)
+        );
+
+
+CREATE TABLE correct_brands(
+        Наименование varchar(256),
+	Короткое_наименование varchar(30)
+        );
+CREATE INDEX correct_brands_brand_index ON correct_brands(Наименование);
+
+CREATE TABLE incorrect_brands(
+        Правильное_наименование varchar(256),
+	Некорректное_наименование varchar(256)
+        );
+CREATE INDEX incorrect_brands_inbrand_index ON incorrect_brands(Некорректное_наименование);
+
+CREATE TABLE base_price (
+	id serial,
+        Артикул varchar(256),
+        Бренд varchar(256),
+	ЦенаБ numeric(12,2),
+	ЦенаМин numeric(12,2),
+	ЦенаМинПоставщик varchar(20),
+	duple BOOLEAN default True
+	);
+CREATE INDEX base_price_article_brand_index ON base_price(Артикул, Бренд);
+
+
+CREATE TABLE res2 (
+        id serial,
+		КлючП varchar(256),
+        АртикулП varchar(256),
+        БрендП varchar(256),
+        НаименованиеП varchar(256),
+        КоличествоП integer,
+        ЦенаП NUMERIC(12,2),
+		Валюта varchar(20),
+        КратностьП integer default 1,
+        ПримечаниеП varchar(256),
+        Артикул varchar(256),
+	Бренд varchar(256),
+	Бренд_заполнен varchar(256),
+	Наименование varchar(256),
+        Количество integer,
+        Цена NUMERIC(12,2),
+        Кратность integer,
+		Код_поставщика varchar(10),
+	Разрешение_на_продажу varchar(1000),
+	Кратность_лота integer,
+	Цена_поставщика_с_издержками NUMERIC(12,2),
+	ЦенаБ NUMERIC(12,2),
+	ЦенаПотЦенаБ real,
+	Исключить varchar(80),	
+	Градация integer,
+	Предложений_в_опте integer default 0,
+	Цена_с_наценкой NUMERIC(12,2),
+	Превышение_базовой_цены real
+        );
+CREATE INDEX res2_article_brand_index ON res2(Артикул, Бренд);
+CREATE INDEX res2_article_brand_fill_in_index ON res2(Артикул, Бренд_заполнен);
+
+
+CREATE TABLE tmp_price_compare (
+	id serial,
+	Артикул varchar(256),
+	Бренд varchar(256),
+	Цена NUMERIC(12,2),
+	Код_поставщика varchar(10)
+	);
+CREATE INDEX tmp_price_compare_article_brand_index ON tmp_price_compare(Артикул, Бренд);
+
+CREATE TABLE mass_offers (
+	id serial,
+	Артикул varchar(256),
+	Бренд varchar(256),
+	Код_прайса varchar(10),
+	Предложений_в_опте integer,
+	duple BOOLEAN default True
+	);
+CREATE INDEX mass_offers_article_brand_index ON mass_offers(Артикул, Бренд);
+CREATE INDEX mass_offers_article_brand_code_index ON mass_offers(Артикул, Бренд, Код_прайса);
+
+create table app_settings(
+	param varchar,
+	val varchar
+);
+insert into app_settings values('base_price_update', '23 0');
+insert into app_settings values('mass_offers_update', '23 0');
+
+create table Настройки_прайса_покупателя (
+	Наименование varchar(256),
+	Код_покупателя varchar(20),
+	Имя_прайса varchar(256),
+	Код_прайса_покупателя varchar(20),
+	Включен varchar(20),
+	Уровень_сервиса_не_ниже real,
+	Сайт varchar(500),
+	Адрес_для_прайсов varchar(500),
+	Итоговая_наценка real,
+	Короткое_наименование varchar(10),
+	Отсрочка_дней real,
+	КБ_цены real,
+	Продаём_для_К_ОС varchar(10),
+	Наценка_для_К_ОС real,
+	Ограничение_строк integer,
+	Ограничение_размера real,
+	Время_рассылки_прайса varchar(500)
+);
+
+create table Разрешения_бпп(
+	Код_прайса varchar(20),
+	Бренд varchar(256),
+	Наценка_ПБ real,
+	Код_ПБ_П varchar(1000)
+);
+
+create table Резерв(
+	Код_прайса varchar(20),
+	Наш_Бренд varchar(256),
+	Артикул_наш varchar(256),
+	Артикул_сравнение varchar(256),
+	ШтР integer
+);
+
+CREATE TABLE total (
+	КлючП varchar(256),
+        АртикулП varchar(256),
+        БрендП varchar(256),
+        НаименованиеП varchar(256),
+        КоличествоП integer,
+        ЦенаП NUMERIC(12,2),
+		Валюта varchar(20),
+        КратностьП integer default 1,
+        ПримечаниеП varchar(256),
+        Артикул varchar(256),
+	Бренд varchar(256),
+	Бренд_заполнен varchar(256),
+	Наименование varchar(256),
+        Количество integer,
+        Цена NUMERIC(12,2),
+        Кратность integer,
+		Код_поставщика varchar(10),
+	Разрешение_на_продажу varchar(1000),
+	Кратность_лота integer,
+	Цена_поставщика_с_издержками NUMERIC(12,2),
+	ЦенаБ NUMERIC(12,2),
+	Исключить varchar(80),	
+	Градация integer,
+	Предложений_в_опте integer default 0,
+	Цена_с_наценкой NUMERIC(12,2)
+);
+
+
+CREATE TABLE price_list (
+	id serial,
+	КлючП varchar(256),
+    АртикулП varchar(256),
+        БрендП varchar(256),
+        НаименованиеП varchar(256),
+        КоличествоП integer,
+        ЦенаП NUMERIC(12,2),
+		Валюта varchar(20),
+        КратностьП integer,
+        ПримечаниеП varchar(256),
+        Артикул varchar(256),
+		АртикулР varchar(256),
+	Бренд varchar(256),
+	Бренд_заполнен varchar(256),
+	Наименование varchar(256),
+        Количество integer,
+        Цена NUMERIC(12,2),
+        Кратность integer,
+		Код_поставщика varchar(10),
+	Разрешение_на_продажу varchar(1000),
+	Кратность_лота integer,
+	Цена_поставщика_с_издержками NUMERIC(12,2),
+	ЦенаБ NUMERIC(12,2),
+	Исключить varchar(80),	
+	Градация integer,
+	Предложений_в_опте integer,
+	Цена_с_наценкой NUMERIC(12,2),
+	Имя_прайса varchar(256),
+	Код_покупателя varchar(20),
+	Код_прайса varchar(20),
+	Код_прайсаП varchar(20),
+	Бренд_итог varchar(256),
+	Цена_итог NUMERIC(12,2),
+	Превышение_базовой_цены real default 0,
+	Рейтинг_в_прайс real
+);
+CREATE INDEX price_list_article_brand_index ON price_list(Артикул, Бренд);
+CREATE INDEX price_list_articleR_brand_index ON price_list(АртикулР, Бренд);
+CREATE INDEX price_list_brand_index ON price_list(Бренд);
+
+
+create table Справочник_Бренды_покупателя(
+	Правильный_Бренд varchar(256),
+	Покупатель varchar(256),
+	Бренд_покупателя varchar(256)
+);
+CREATE INDEX ctl_brand_buyer_cor_brand_index ON Справочник_Бренды_покупателя(Покупатель, Правильный_Бренд);
+CREATE INDEX ctl_brand_b_cor_brand_index ON Справочник_Бренды_покупателя(Правильный_Бренд);
+
+CREATE TABLE Справочник_Бренды (
+	Бренд varchar(256),
+	Краткое_наименование varchar(20)
+);
+
+CREATE TABLE Время_отправки_прайсов (
+    Код_прайса_покупателя varchar(20),
+    last_update_time timestamp,
+    last_send_time timestamp
+);
+
+create table price_report(
+	code varchar(10) unique,
+	exit1 varchar(100),
+	exit2 varchar(100),
+	loaded_rows integer,
+	unloaded_rows integer,
+	update_time TIMESTAMP
+);
+
+CREATE TABLE mail_report_tab (
+        sender varchar(256),
+        file_name varchar(256),
+        date varchar(256)
+);
+
+
+CREATE TABLE file_settings (
+	id UUID default gen_random_uuid(),
+	Прайс varchar(20),
+	Пропуск_сверху integer default 0,
+	Пропуск_снизу integer default 0,
+	Сопоставление_по varchar(100),
+	Строка_КлючП integer,
+	Столбец_КлючП integer,
+	rc_КлючП varchar(50),
+	Название_КлючП varchar(256),
+	Строка_АртикулП integer,
+	Столбец_АртикулП integer,
+	rc_АртикулП varchar(50),
+	Название_АртикулП varchar(256),
+	Строка_БрендП integer,
+	Столбец_БрендП integer,
+	rc_БрендП varchar(50),
+	Название_БрендП varchar(256),
+	Строка_НаименованиеП integer,
+	Столбец_НаименованиеП integer,
+	rc_НаименованиеП varchar(50),
+	Название_НаименованиеП varchar(256),
+	Строка_КоличествоП integer,
+	Столбец_КоличествоП integer,
+	rc_КоличествоП varchar(50),
+	Название_КоличествоП varchar(256),
+	Строка_ЦенаП integer,
+	Столбец_ЦенаП integer,
+	rc_ЦенаП varchar(50),
+	Название_ЦенаП varchar(256),
+	Строка_КратностьП integer,
+	Столбец_КратностьП integer,
+	rc_КратностьП varchar(50),
+	Название_КратностьП varchar(256),
+	Строка_ПримечаниеП integer,
+	Столбец_ПримечаниеП integer,
+	rc_ПримечаниеП varchar(50),
+	Название_ПримечаниеП varchar(256),
+	Строка_Валюта integer,
+	Столбец_Валюта integer,
+	rc_Валюта varchar(50),
+	Название_Валюта varchar(256)
+);
