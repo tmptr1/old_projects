@@ -1,0 +1,5 @@
+api_id_tg:
+api_hash_tg:
+bot_id:
+api_key_dd:
+api_secrey_key_dd:
