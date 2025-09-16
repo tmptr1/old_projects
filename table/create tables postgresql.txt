@@ -1,0 +1,159 @@
+
+CREATE TABLE res (
+        Ключ1_поставщика varchar(256),
+        Артикул_поставщика varchar(256),
+        Производитель_поставщика varchar(256),
+        Наименование_поставщика varchar(256),
+        Количество_поставщика REAL,
+        Цена_поставщика NUMERIC(12,2),
+        Кратность_поставщика REAL,
+        Примечание_поставщика varchar(1000),
+        _01Артикул varchar(256),
+	_02Производитель varchar(256),
+        _03Наименование varchar(500),
+        _04Количество REAL,
+        _05Цена NUMERIC(12,2),
+        _06Кратность_ REAL,
+        _07Код_поставщика varchar(150),
+        _09Код_Поставщик_Товар varchar(500),
+        _10Оригинал varchar(30),
+        _13Градация REAL,
+        _14Производитель_заполнен varchar(1000),
+        _15КодТутОптТорг varchar(256),
+        _17КодУникальности varchar(500),
+        _18КороткоеНаименование varchar(256),
+	_19МинЦенаПоПрайсу varchar(50),
+        _20ИслючитьИзПрайса varchar(50),
+        Название_файла varchar(50),
+        Отсрочка REAL,
+        Продаём_для_ОС varchar(20),
+        Наценка_для_ОС REAL,
+        Макс_снижение_от_базовой_цены REAL,
+        Наценка_на_праздники_1_02 REAL,
+        Наценка_Р REAL,
+        Мин_наценка REAL,
+	Наценка_на_оптовые_товары REAL,
+        Шаг_градаци REAL,
+        Шаг_опт REAL,
+        Разрешения_ПП varchar(3000),
+        Процент_Отгрузки REAL,
+        УбратьЗП varchar(3000),
+        Предложений_опт REAL,
+        ЦенаБ NUMERIC(12,2),
+        Низкая_цена NUMERIC(12,2),
+        Кол_во REAL,
+        Наценка_ПБ REAL,
+        Код_ПБ_П varchar,
+        _06Кратность REAL,
+        Кратность_меньше varchar(25),
+        _05Цена_плюс NUMERIC(12,2),
+        ШтР integer DEFAULT 0,
+        Количество_закупок REAL,
+	ЦенаМин numeric(12,2),
+	ЦенаМинПоставщик varchar(20)
+        )
+
+
+CREATE TABLE data07_14 (
+        Работаем varchar(20),
+        Период_обновления_не_более REAL,
+        Настройка varchar(100),
+        Макс_снижение_от_базовой_цены REAL,
+        Правильное varchar(256),
+        Наценка_ПБ REAL,
+        Код_ПБ_П varchar)
+
+
+CREATE TABLE data07(
+        Работаем varchar(20),
+        Период_обновления_не_более REAL,
+        Настройка varchar(50),
+        Отсрочка REAL,
+        Продаём_для_ОС varchar(20) DEFAULT null,
+        Наценка_для_ОС REAL,
+        Макс_снижение_от_базовой_цены REAL,
+        Наценка_на_праздники_1_02 REAL,
+        Наценка_Р REAL,
+        Мин_наценка REAL,
+        Наценка_на_оптовые_товары REAL,
+        Шаг_градаци REAL,
+        Шаг_опт REAL DEFAULT 0,
+        Разрешения_ПП varchar(3000),
+        Процент_Отгрузки REAL
+        )
+
+
+CREATE TABLE data15(
+        _15 varchar(300),
+        Предложений_опт REAL,
+        ЦенаБ REAL
+        )
+
+
+CREATE TABLE data09(
+        УбратьЗП varchar(3000),
+        ШтР REAL DEFAULT NULL,
+        _09 varchar(300)
+        )
+
+
+CREATE TABLE Закупки_для_ОС(
+        Количество_закупок REAL,
+        АртикулПроизводитель varchar(300)
+        )
+
+
+CREATE TABLE Время_изменений(
+        Название_файла varchar(256),
+        Время_изменения varchar(256)
+        )
+
+CREATE TABLE tmp(
+	setting varchar(50),
+	val varchar(150)
+)
+
+INSERT INTO tmp VALUES('SilentUpdateConditions', '0')
+
+CREATE TABLE info_tab (
+        Название_файла varchar(20),
+        Инфо varchar(256),
+        Время_загрузки varchar(256)
+		)
+
+CREATE TABLE Резерв_да(
+        _09Код varchar(300),
+        ШтР REAL DEFAULT NULL,
+        _07Код varchar(30)
+        )
+
+CREATE TABLE base_price (
+	Артикул varchar(256),
+	Бренд varchar(256),
+	ЦенаБ numeric(12,2),
+	ЦенаМин numeric(12,2),
+	ЦенаМинПоставщик varchar(20)
+	);
+CREATE INDEX base_price_article_brand_index ON base_price(Артикул, Бренд);
+CREATE TABLE mass_offers (
+	Артикул varchar(256),
+	Бренд varchar(256),
+	Предложений_в_опте integer
+	);
+CREATE INDEX mass_offers_article_brand_index ON mass_offers(Артикул, Бренд);
+
+=====
+CREATE INDEX res_file_name_index ON public.res USING btree ("Название_файла")
+CREATE INDEX res_07_index ON public.res USING btree ("_07Код_поставщика")
+CREATE INDEX data07_setting_index ON public.data07 USING btree ("Настройка")
+CREATE INDEX res_09_index ON public.res USING btree ("_09Код_Поставщик_Товар")
+CREATE INDEX data09_09_index ON public.data09 USING btree (_09)
+CREATE INDEX res_15_index ON public.res USING btree ("_15КодТутОптТорг")
+CREATE INDEX data15_15_index ON public.data15 USING btree (_15)
+CREATE INDEX data07_14_setting_index ON public.data07_14 USING btree ("Настройка")
+CREATE EXTENSION IF NOT EXISTS pg_trgm
+CREATE INDEX data07_14_right_index ON public.data07_14 USING gin ("Правильное" gin_trgm_ops)
+CREATE INDEX res_14_index ON public.res USING gin ("_14Производитель_заполнен" gin_trgm_ops)
+CREATE INDEX reserve_09_index ON public.Резерв_да USING btree ("_09Код")
+CREATE INDEX res_1_7_14_index ON res(_01Артикул, _07Код_поставщика, _14Производитель_заполнен)
+CREATE INDEX res_article_brand_index ON res(_01Артикул, _14Производитель_заполнен);
