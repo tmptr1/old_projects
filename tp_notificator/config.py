@@ -1,0 +1,2 @@
+TG_TOKEN = ''
+TP_SECRET_KEY = b''
