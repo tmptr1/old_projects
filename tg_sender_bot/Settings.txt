@@ -1,0 +1,3 @@
+api_id_tg:
+api_hash_tg:
+bot_id:some_bot
